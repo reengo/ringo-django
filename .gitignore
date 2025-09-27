@@ -1,0 +1,32 @@
+# Python/Django
+*.pyc
+__pycache__/
+.env
+.DS_Store
+venv/
+env/
+db.sqlite3
+media/
+static_root/
+*.log
+local_settings.py
+
+# Node/React
+node_modules/
+build/
+.parcel-cache/
+.vscode/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.prettierignore
+coverage/
+
+# General
+.idea/
+.vscode/
+*.swp
+*~
+
+# Any other temporary or generated files

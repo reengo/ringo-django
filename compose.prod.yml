@@ -1,0 +1,63 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: ringo-nginx
+    depends_on:
+      - api
+      - app
+    ports:
+      - "80:80"
+      - "443:443" # For HTTPS
+    volumes:
+      - ./nginx:/etc/nginx/conf.d # Nginx configuration
+      - ./frontend/build:/var/www/ringo # React build files
+      - static_volume:/var/www/static # Django static files
+    networks:
+      - ringo_net
+  db:
+    image: postgres:17
+    container_name: ringo-db
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - ringo_net
+  api:
+    build: ./backend/
+    container_name: ringo-django
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py createsuperuser --noinput || true &&
+      python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - static_volume:/app/static
+    depends_on:
+      - db
+    env_file:
+      - .env
+    networks:
+      - ringo_net
+  app:
+    build: ./frontend
+    container_name: ringo-react
+    command: sh -c "echo 'React build complete'"
+    volumes:
+      - ./frontend/build:/app/build
+    networks:
+      - ringo_net
+volumes:
+  postgres_data:
+  node_modules:
+  static_volume:
+
+networks:
+  ringo_net:
+    driver: bridge

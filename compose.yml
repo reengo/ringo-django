@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:17
+    container_name: ringo-db-dev
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - ringo_net
+  api:
+    build: ./backend/
+    container_name: ringo-django-dev
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py createsuperuser --noinput || true &&
+      python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: "1"
+      DJANGO_ALLOWED_HOSTS: "localhost"
+    volumes:
+      - ./backend:/app
+      - static_volume:/app/static
+    depends_on:
+      - db
+    env_file:
+      - .env
+    networks:
+      - ringo_net
+  app:
+    build: 
+      context: ./frontend
+      target: development
+    container_name: ringo-react-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - ringo_net
+volumes:
+  postgres_data:
+  node_modules:
+  static_volume:
+
+networks:
+  ringo_net:
+    driver: bridge
