@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import UserSerializer, NoteSerializer
+from .serializers import UserSerializer, NoteSerializer, PostSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Note
+from .models import Note, Post
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -32,3 +32,15 @@ class NoteDelete(generics.DestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return Note.objects.filter(author=user)
+
+
+class PostListView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [AllowAny]
+    queryset = Post.objects.filter(is_published=True)
+
+
+class PostDetailView(generics.RetrieveAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [AllowAny]
+    queryset = Post.objects.filter(is_published=True)
