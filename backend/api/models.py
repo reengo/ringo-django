@@ -9,3 +9,17 @@ class Note(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    excerpt = models.TextField(help_text="Short summary shown on blog listing and homepage preview.")
+    content = models.TextField()
+    published_at = models.DateTimeField(auto_now_add=True)
+    is_published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['-published_at']
+
+    def __str__(self):
+        return self.title
