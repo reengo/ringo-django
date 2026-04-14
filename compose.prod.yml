@@ -16,18 +16,6 @@ services:
       - static_volume:/var/www/static
     networks:
       - ringo_net
-  db:
-    image: postgres:17
-    container_name: ringo-db
-    restart: always
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    env_file:
-      - .env
-    networks:
-      - ringo_net
   api:
     build: ./backend/
     container_name: ringo-django
@@ -43,8 +31,6 @@ services:
     volumes:
       - ./backend:/app
       - static_volume:/app/static
-    depends_on:
-      - db
     env_file:
       - .env
     networks:
@@ -61,7 +47,6 @@ services:
     networks:
       - ringo_net
 volumes:
-  postgres_data:
   node_modules:
   static_volume:
   frontend_dist:
