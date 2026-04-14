@@ -39,6 +39,8 @@ services:
     build:
       context: ./frontend
       target: production
+      args:
+        - REACT_APP_API_URL=${REACT_APP_API_URL}
     container_name: ringo-react
     # /app/build exists in the image (not shadowed); copy to named volume for nginx
     command: sh -c "cp -r /app/build/. /dist/ && echo 'React build deployed'"

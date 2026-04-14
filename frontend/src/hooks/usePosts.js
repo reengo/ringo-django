@@ -8,7 +8,11 @@ export function usePosts() {
 
     useEffect(() => {
         api.get('/api/posts/')
-            .then((res) => setPosts(res.data))
+            .then((res) => {
+                const data = res.data;
+                // handle both plain arrays and DRF paginated responses { results: [] }
+                setPosts(Array.isArray(data) ? data : (data?.results ?? []));
+            })
             .catch((err) => setError(err))
             .finally(() => setLoading(false));
     }, []);
