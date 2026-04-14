@@ -3,15 +3,17 @@ services:
     image: nginx:latest
     container_name: ringo-nginx
     depends_on:
-      - api
-      - app
+      api:
+        condition: service_started
+      app:
+        condition: service_completed_successfully
     ports:
       - "80:80"
-      - "443:443" # For HTTPS
+      - "443:443"
     volumes:
-      - ./nginx:/etc/nginx/conf.d # Nginx configuration
-      - ./frontend/build:/var/www/ringo # React build files
-      - static_volume:/var/www/static # Django static files
+      - ./nginx:/etc/nginx/conf.d
+      - frontend_dist:/var/www/ringo  # named volume written by app container
+      - static_volume:/var/www/static
     networks:
       - ringo_net
   db:
@@ -48,19 +50,21 @@ services:
     networks:
       - ringo_net
   app:
-    build: 
+    build:
       context: ./frontend
       target: production
     container_name: ringo-react
-    command: sh -c "echo 'React build complete'"
+    # /app/build exists in the image (not shadowed); copy to named volume for nginx
+    command: sh -c "cp -r /app/build/. /dist/ && echo 'React build deployed'"
     volumes:
-      - ./frontend/build:/app/build
+      - frontend_dist:/dist
     networks:
       - ringo_net
 volumes:
   postgres_data:
   node_modules:
   static_volume:
+  frontend_dist:
 
 networks:
   ringo_net:
