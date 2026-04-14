@@ -34,7 +34,7 @@ services:
     env_file:
       - .env
     healthcheck:
-      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/admin/login/')\" || exit 1"]
+      test: ["CMD-SHELL", "python -c \"import socket; s=socket.socket(); s.settimeout(3); s.connect(('localhost', 8000)); s.close()\""]
       interval: 10s
       timeout: 5s
       retries: 5
