@@ -4,7 +4,7 @@ services:
     container_name: ringo-nginx
     depends_on:
       api:
-        condition: service_started
+        condition: service_healthy
       app:
         condition: service_completed_successfully
     ports:
@@ -33,6 +33,12 @@ services:
       - static_volume:/app/static
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/admin/login/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     networks:
       - ringo_net
   app:
