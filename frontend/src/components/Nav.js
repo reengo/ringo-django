@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import logo from '../assets/img/logo-ringo-pad.png';
 import { cn } from "../utils";
@@ -6,8 +6,15 @@ import { Moon, Sun } from "lucide-react";
 
 function Nav({ sections, darkMode, toggleDark }) {
     const [open, setOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 60);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
 
     const handleNav = (id) => {
         setOpen(false);
@@ -28,7 +35,14 @@ function Nav({ sections, darkMode, toggleDark }) {
         <nav className={cn("fixed top-0 left-0 right-0 z-50 backdrop-blur", darkMode ? "bg-slate-900/80" : "bg-white/60")}>
             <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
                 <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                    <img src={logo} alt="Logo" className="h-10 w-auto cursor-pointer rounded-xl hover:opacity-80 transition" />
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        className={cn(
+                            "w-auto cursor-pointer rounded-xl hover:opacity-80 transition-all duration-300 ease-in-out",
+                            scrolled ? "h-9" : "h-14"
+                        )}
+                    />
                 </Link>
 
                 <div className="hidden md:flex items-center gap-6">
