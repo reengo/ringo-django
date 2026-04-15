@@ -40,7 +40,7 @@ function Nav({ sections, darkMode, toggleDark }) {
                         alt="Logo"
                         className={cn(
                             "w-auto cursor-pointer rounded-xl hover:opacity-80 transition-all duration-300 ease-in-out",
-                            scrolled ? "h-9" : "h-14"
+                            scrolled ? "h-9" : "h-20"
                         )}
                     />
                 </Link>

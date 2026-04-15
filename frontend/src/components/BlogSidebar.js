@@ -17,7 +17,7 @@ function BlogSidebar({ posts, activeId = null, darkMode }) {
             return (
               <li key={post.id}>
                 <Link
-                  to={`/blog/${post.id}`}
+                  to={`/blog/${post.slug}`}
                   className={cn("group block", isCurrent && "pointer-events-none")}
                 >
                   <p className={cn(
