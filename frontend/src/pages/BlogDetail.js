@@ -9,6 +9,38 @@ import { usePost, usePosts } from "../hooks/usePosts";
 import { sections } from "../config";
 import { cn } from "../utils";
 
+function SkeletonArticle({ darkMode }) {
+  const bar = (w) => (
+    <div className={cn("h-3 rounded animate-pulse", darkMode ? "bg-slate-700" : "bg-slate-200", w)} />
+  );
+  return (
+    <div>
+      {/* Title */}
+      <div className={cn("h-9 w-3/4 rounded animate-pulse mb-3", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+      {/* Date */}
+      <div className={cn("h-3 w-28 rounded animate-pulse mb-10", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+      {/* Body lines */}
+      <div className="space-y-3">
+        {bar("w-full")}
+        {bar("w-full")}
+        {bar("w-5/6")}
+        {bar("w-full")}
+        {bar("w-4/5")}
+        <div className="pt-2" />
+        {bar("w-full")}
+        {bar("w-full")}
+        {bar("w-2/3")}
+        <div className="pt-2" />
+        {bar("w-full")}
+        {bar("w-11/12")}
+        {bar("w-3/4")}
+        {bar("w-full")}
+        {bar("w-1/2")}
+      </div>
+    </div>
+  );
+}
+
 export default function BlogDetail({ darkMode, toggleDark }) {
   const { slug } = useParams();
   const { post, loading, error } = usePost(slug);
@@ -41,7 +73,7 @@ export default function BlogDetail({ darkMode, toggleDark }) {
           <div className="flex flex-col lg:flex-row gap-10">
 
             <article ref={articleRef} className="flex-1 min-w-0">
-              {loading                    && <p className="text-slate-400">Loading…</p>}
+              {loading                    && <SkeletonArticle darkMode={darkMode} />}
               {error                      && <p className="text-red-400">Could not load post.</p>}
               {!loading && !error && !post && <p className="text-slate-400">Blog post not found.</p>}
 

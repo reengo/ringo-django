@@ -11,6 +11,38 @@ import { cn } from "../utils";
 const MIN_SEARCH  = 5;
 const PAGE_SIZE   = 10;
 
+function SkeletonCard({ darkMode }) {
+  return (
+    <div className={cn(
+      "flex flex-col rounded-2xl border p-6 animate-pulse",
+      darkMode ? "bg-slate-800 border-slate-700" : "bg-white border-slate-200"
+    )}>
+      <div className={cn("h-3 w-20 rounded mb-4", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+      <div className={cn("h-5 w-3/4 rounded mb-2", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+      <div className={cn("h-5 w-1/2 rounded mb-5", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+      <div className="space-y-2 flex-1">
+        <div className={cn("h-3 w-full rounded", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+        <div className={cn("h-3 w-full rounded", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+        <div className={cn("h-3 w-2/3 rounded", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+      </div>
+      <div className={cn("h-3 w-24 rounded mt-6", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+    </div>
+  );
+}
+
+function SkeletonListRow({ darkMode }) {
+  return (
+    <div className={cn("py-5 flex gap-4 animate-pulse border-b", darkMode ? "border-slate-700/40" : "border-slate-200")}>
+      <div className={cn("h-3 w-24 rounded flex-shrink-0 mt-1", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+      <div className="flex-1 space-y-2">
+        <div className={cn("h-4 w-2/3 rounded", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+        <div className={cn("h-3 w-full rounded", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+        <div className={cn("h-3 w-4/5 rounded", darkMode ? "bg-slate-700" : "bg-slate-200")} />
+      </div>
+    </div>
+  );
+}
+
 function CardView({ posts, darkMode }) {
   return (
     <div className="grid gap-6 sm:grid-cols-2">
@@ -160,8 +192,7 @@ export default function Blog({ darkMode, toggleDark }) {
             </p>
           </div>
 
-          {loading && <p className="text-slate-400 mb-6">Loading posts…</p>}
-          {error   && <p className="text-red-400 mb-6">Could not load posts.</p>}
+          {error && <p className="text-red-400 mb-6">Could not load posts.</p>}
 
           <div className="flex flex-col lg:flex-row gap-10">
 
@@ -234,10 +265,19 @@ export default function Blog({ darkMode, toggleDark }) {
                 </p>
               )}
 
-              {view === "card"
-                ? <CardView posts={paginated} darkMode={darkMode} />
-                : <ListView posts={paginated} darkMode={darkMode} />
-              }
+              {loading ? (
+                view === "card"
+                  ? <div className="grid gap-6 sm:grid-cols-2">
+                      {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} darkMode={darkMode} />)}
+                    </div>
+                  : <div>
+                      {Array.from({ length: 6 }).map((_, i) => <SkeletonListRow key={i} darkMode={darkMode} />)}
+                    </div>
+              ) : (
+                view === "card"
+                  ? <CardView posts={paginated} darkMode={darkMode} />
+                  : <ListView posts={paginated} darkMode={darkMode} />
+              )}
 
               <Pagination page={page} totalPages={totalPages} onChange={setPage} darkMode={darkMode} />
             </div>
