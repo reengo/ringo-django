@@ -44,3 +44,4 @@ class PostDetailView(generics.RetrieveAPIView):
     serializer_class = PostSerializer
     permission_classes = [AllowAny]
     queryset = Post.objects.filter(is_published=True)
+    lookup_field = 'slug'

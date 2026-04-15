@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -9,9 +10,19 @@ import { sections } from "../config";
 import { cn } from "../utils";
 
 export default function BlogDetail({ darkMode, toggleDark }) {
-  const { id } = useParams();
-  const { post, loading, error } = usePost(id);
+  const { slug } = useParams();
+  const { post, loading, error } = usePost(slug);
   const { posts } = usePosts();
+  const articleRef = useRef(null);
+  const [isTall, setIsTall] = useState(false);
+
+  useEffect(() => {
+    if (!articleRef.current) return;
+    const check = () => setIsTall(articleRef.current.offsetHeight > window.innerHeight);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [post]);
 
   return (
     <div className={cn("min-h-screen flex flex-col", darkMode ? "bg-slate-900 text-slate-100" : "bg-white text-slate-900")}>
@@ -22,14 +33,14 @@ export default function BlogDetail({ darkMode, toggleDark }) {
 
           <Link
             to="/blogs"
-            className="inline-block mb-8 text-sm font-medium text-[var(--primary)] hover:text-[var(--accent)] transition-colors"
+            className="inline-block mb-8 pt-10 text-sm font-medium text-[var(--primary)] hover:text-[var(--accent)] transition-colors"
           >
             ← Back to Blogs
           </Link>
 
           <div className="flex flex-col lg:flex-row gap-10">
 
-            <article className="flex-1 min-w-0">
+            <article ref={articleRef} className="flex-1 min-w-0">
               {loading                    && <p className="text-slate-400">Loading…</p>}
               {error                      && <p className="text-red-400">Could not load post.</p>}
               {!loading && !error && !post && <p className="text-slate-400">Blog post not found.</p>}
@@ -53,6 +64,17 @@ export default function BlogDetail({ darkMode, toggleDark }) {
                       {post.content}
                     </ReactMarkdown>
                   </div>
+
+                  {isTall && (
+                    <div className="mt-12 pt-8 border-t border-slate-700/50">
+                      <Link
+                        to="/blogs"
+                        className="inline-block text-sm font-medium text-[var(--primary)] hover:text-[var(--accent)] transition-colors"
+                      >
+                        ← Back to Blogs
+                      </Link>
+                    </div>
+                  )}
                 </>
               )}
             </article>

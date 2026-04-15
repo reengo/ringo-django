@@ -48,7 +48,7 @@ function App() {
         } />
         <Route path="/blogs"     element={<Blog       darkMode={darkMode} toggleDark={toggleDark} />} />
         <Route path="/resume"    element={<Navigate to="/blogs" replace />} />
-        <Route path="/blog/:id"  element={<BlogDetail darkMode={darkMode} toggleDark={toggleDark} />} />
+        <Route path="/blog/:slug" element={<BlogDetail darkMode={darkMode} toggleDark={toggleDark} />} />
         <Route path="/login"     element={<Login />} />
         <Route path="/register"  element={<RegisterAndLogout />} />
         <Route path="/*"         element={<NotFound />} />

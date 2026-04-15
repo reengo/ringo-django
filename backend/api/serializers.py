@@ -27,7 +27,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model  = Post
-        fields = ['id', 'title', 'excerpt', 'content', 'content_html', 'date', 'published_at']
+        fields = ['id', 'slug', 'title', 'excerpt', 'content', 'content_html', 'date', 'published_at']
 
     def get_date(self, obj):
         return obj.published_at.strftime('%b %d, %Y')

@@ -20,17 +20,17 @@ export function usePosts() {
     return { posts, loading, error };
 }
 
-export function usePost(id) {
+export function usePost(slug) {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        api.get(`/api/posts/${id}/`)
+        api.get(`/api/posts/${slug}/`)
             .then((res) => setPost(res.data))
             .catch((err) => setError(err))
             .finally(() => setLoading(false));
-    }, [id]);
+    }, [slug]);
 
     return { post, loading, error };
 }
