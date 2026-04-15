@@ -174,3 +174,19 @@ CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "http://localhost:
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "http://localhost:3000").split(",")
+
+# ── Security hardening (active in production; DEBUG=False implies HTTPS) ──────
+if not DEBUG:
+    SECURE_SSL_REDIRECT            = True
+    SECURE_HSTS_SECONDS            = 31536000   # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD            = True
+    SECURE_PROXY_SSL_HEADER        = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE          = True
+    SESSION_COOKIE_HTTPONLY        = True
+    CSRF_COOKIE_SECURE             = True
+    CSRF_COOKIE_HTTPONLY           = True
+
+X_FRAME_OPTIONS          = "DENY"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER  = True
