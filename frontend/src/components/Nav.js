@@ -28,7 +28,7 @@ function Nav({ sections, darkMode, toggleDark }) {
         <nav className={cn("fixed top-0 left-0 right-0 z-50 backdrop-blur", darkMode ? "bg-slate-900/80" : "bg-white/60")}>
             <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
                 <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                    <img src={logo} alt="Logo" className="cursor-pointer rounded-xl hover:opacity-80 transition" />
+                    <img src={logo} alt="Logo" className="h-10 w-auto cursor-pointer rounded-xl hover:opacity-80 transition" />
                 </Link>
 
                 <div className="hidden md:flex items-center gap-6">

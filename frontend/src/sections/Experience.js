@@ -81,7 +81,7 @@ function Experience({ CONFIG }) {
 
     return (
         <div className="bg-green-900">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8 sm:py-52">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-52">
                 <div className="">
                 <span className="mb-2 block text-sm font-semibold text-orange-400">My Career in a Nutshell</span>
                     <h2 className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl">Experience</h2>
