@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Note, Post
+import markdown as md
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,11 +22,15 @@ class NoteSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    date = serializers.SerializerMethodField()
+    date         = serializers.SerializerMethodField()
+    content_html = serializers.SerializerMethodField()
 
     class Meta:
-        model = Post
-        fields = ['id', 'title', 'excerpt', 'content', 'date', 'published_at']
+        model  = Post
+        fields = ['id', 'title', 'excerpt', 'content', 'content_html', 'date', 'published_at']
 
     def get_date(self, obj):
         return obj.published_at.strftime('%b %d, %Y')
+
+    def get_content_html(self, obj):
+        return md.markdown(obj.content, extensions=['extra', 'nl2br'])
