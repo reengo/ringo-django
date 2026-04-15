@@ -3,7 +3,7 @@ import { cn } from "../utils";
 
 function BlogSidebar({ posts, activeId = null, darkMode }) {
   return (
-    <aside className="lg:w-72 flex-shrink-0">
+    <aside className="w-full lg:w-72 flex-shrink-0">
       <div className={cn(
         "sticky top-24 rounded-2xl border p-6",
         darkMode ? "bg-slate-800 border-slate-700" : "bg-slate-50 border-slate-200"

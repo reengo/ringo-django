@@ -47,8 +47,8 @@ function Quote({next}) {
         <div>
             {/* Dark scrim over parallax image for text legibility */}
             <div className="absolute inset-0 bg-black/55" aria-hidden="true" />
-            <div className="relative mx-auto max-w-7xl sm:px-6 sm:py-32 lg:px-8">
-                <article className="py-80">
+            <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-32 lg:px-8">
+                <article className="py-16 sm:py-40">
                     <blockquote className="text-white drop-shadow-lg">
                         {activeQuote.quote}
                         <span className="block mt-3 font-sans text-base font-thin text-slate-300">— {activeQuote.author}</span>

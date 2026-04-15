@@ -4,7 +4,7 @@ import { usePosts } from "../hooks/usePosts";
 function BlogPreview() {
   const { posts: blogs, loading } = usePosts();
   return (
-    <div className="bg-slate-800 py-60">
+    <div className="bg-slate-800 py-20 sm:py-60">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-12">
           <span className="mb-2 block text-sm font-semibold text-orange-400">Latest Writing</span>

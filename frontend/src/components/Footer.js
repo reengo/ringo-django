@@ -2,8 +2,8 @@ function Footer() {
   return (
     <footer className='bg-green-950 text-white'>
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="flex items-center">
-          <p className="flex-1 p-10 text-sm text-slate-300">
+        <div className="flex flex-col sm:flex-row items-center gap-4 py-8 px-6">
+          <p className="flex-1 text-sm text-slate-300 text-center sm:text-left">
             © {new Date().getFullYear()} Ringo Bautista. All Rights Reserved
           </p>
           <div className='flex gap-2 text-white'>
