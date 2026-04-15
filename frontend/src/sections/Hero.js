@@ -100,9 +100,9 @@ function Hero({ CONFIG }) {
 
   return (
     <div id="hero" className="relative min-h-screen bg-cover bg-center">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 pt-24 pb-48 sm:py-52 flex flex-col sm:flex-row items-center gap-8 sm:gap-0">
-        <div className="sm:basis-1/3 flex justify-center sm:justify-end px-4 sm:px-10">
-          <img src={goki} alt="Profile" className="sm:float-right w-44 h-44 sm:w-60 sm:h-60 object-contain rounded-full border-4 border-white shadow-xl" />
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 pt-24 pb-48 sm:py-52 flex flex-col sm:flex-row sm:items-start items-center gap-8 sm:gap-0">
+        <div className="sm:basis-1/3 flex justify-center sm:justify-end px-4 sm:px-10 sm:pt-2">
+          <img src={goki} alt="Profile" className="w-44 h-44 sm:w-56 sm:h-56 object-contain rounded-full border-4 border-white shadow-xl" />
         </div>
         <div className="sm:basis-2/3 text-center sm:text-left">
           <h1 className="text-4xl md:text-6xl font-bold">Hi, I'm {CONFIG.name}</h1>
