@@ -2,6 +2,7 @@ services:
   nginx:
     image: nginx:latest
     container_name: ringo-nginx
+    user: root
     depends_on:
       api:
         condition: service_healthy
@@ -14,6 +15,7 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - frontend_dist:/var/www/ringo  # named volume written by app container
       - static_volume:/var/www/static
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     networks:
       - ringo_net
   api:
