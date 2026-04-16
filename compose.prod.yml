@@ -47,6 +47,12 @@ services:
       target: production
       args:
         - REACT_APP_API_URL=${REACT_APP_API_URL}
+        - REACT_APP_TARGET_EMAIL=${REACT_APP_TARGET_EMAIL}
+        - REACT_APP_EMAIL_SERVICE=${REACT_APP_EMAIL_SERVICE}
+        - REACT_APP_EMAIL_APP_ID=${REACT_APP_EMAIL_APP_ID}
+        - REACT_APP_EMAIL_TEMPLATE=${REACT_APP_EMAIL_TEMPLATE}
+        - REACT_APP_EMAIL_PUBLIC_KEY=${REACT_APP_EMAIL_PUBLIC_KEY}
+        - REACT_APP_CV_LINK=${REACT_APP_CV_LINK}
     container_name: ringo-react
     # /app/build exists in the image (not shadowed); copy to named volume for nginx
     command: sh -c "cp -r /app/build/. /dist/ && echo 'React build deployed'"
